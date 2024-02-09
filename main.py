@@ -8,10 +8,17 @@ print(filepaths)
 
 for filepath in filepaths:
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
+
     pdf = FPDF(orientation="P", unit="mm", format="a4")
     pdf.add_page()
+
     filename = Path(filepath).stem
-    invoice_num = filename.split("-")[0]
+    invoice_num, date = filename.split("-")
+
     pdf.set_font("Times", "B", 24)
-    pdf.cell(w=0, h=16, txt=f"Invoice #: {invoice_num}", ln=1, )
+    pdf.cell(w=0, h=16, txt=f"Invoice #: {invoice_num}", ln=1)
+
+    pdf.set_font("Times", "B", 24)
+    pdf.cell(w=0, h=16, txt=f"Date: {date}", ln=1)
+
     pdf.output(f"PDFs/{filename}.pdf")
